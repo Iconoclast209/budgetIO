@@ -12,15 +12,24 @@ namespace Budget_IO
             StreamReader input = null;
             List<string>  lines = new List<string>();
             string line = null;
+            string columnNames = null;
             #endregion
+
+            Console.WriteLine("Enter input filename including file extension:  ");
+            string inputFilename = Console.ReadLine();
+            Console.WriteLine("Enter output filename including file extension:  ");
+            string outputFilename = Console.ReadLine();
+            Console.WriteLine();
+            Console.WriteLine();
 
             try
             {
                 //Open the CSV file
-                input = File.OpenText("2300.csv");
+                input = File.OpenText(inputFilename);
                 Console.WriteLine("CSV file opened.");
                 //Read the first line
-                string columnNames = input.ReadLine();
+                string columnTitles = input.ReadLine();
+                columnNames = ',' + columnTitles;
                 Console.WriteLine("First line read");
                 
                 //Continue to read the lines of data
@@ -62,14 +71,16 @@ namespace Budget_IO
                 Console.WriteLine("The newString is:" + newString);
                 newList.Add(newString);
             }
+            
 
             //Output all of the values in the newList back into a file.
-            /*
+            
             try
             {
-                //Open the file
-                using (StreamWriter writer = new StreamWriter("2300a.csv"))
+                using (StreamWriter writer = new StreamWriter(outputFilename))
                 {
+                    writer.WriteLine(columnNames);
+
                     for (int i = 0; i < newList.Count; i++)
                     {
                         writer.WriteLine(newList[i]);
@@ -79,7 +90,7 @@ namespace Budget_IO
             catch(Exception e)
             {
                 Console.WriteLine(e.Message);
-            }*/
+            }
         }
     }
 }
